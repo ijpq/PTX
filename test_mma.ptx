@@ -13,6 +13,7 @@
 	// .globl	_Z6kernelPaS_Pv
 // _ZZ6kernelPaS_PvE5src_a has been demoted
 // _ZZ6kernelPaS_PvE5src_b has been demoted
+// _ZZ6kernelPaS_PvE10dst_shared has been demoted
 
 .visible .entry _Z6kernelPaS_Pv(
 	.param .u64 _Z6kernelPaS_Pv_param_0,
@@ -20,77 +21,76 @@
 	.param .u64 _Z6kernelPaS_Pv_param_2
 )
 {
-	.reg .b16 	%rs<17>;
-	.reg .b32 	%r<15>;
-	.reg .b64 	%rd<8>;
+	.reg .b16 	%rs<9>;
+	.reg .b32 	%r<25>;
+	.reg .b64 	%rd<12>;
 	// demoted variable
 	.shared .align 1 .b8 _ZZ6kernelPaS_PvE5src_a[128];
 	// demoted variable
 	.shared .align 1 .b8 _ZZ6kernelPaS_PvE5src_b[128];
+	// demoted variable
+	.shared .align 4 .b8 _ZZ6kernelPaS_PvE10dst_shared[256];
 
 	ld.param.u64 	%rd1, [_Z6kernelPaS_Pv_param_0];
 	ld.param.u64 	%rd2, [_Z6kernelPaS_Pv_param_1];
-	cvta.to.global.u64 	%rd3, %rd2;
-	cvta.to.global.u64 	%rd4, %rd1;
-	mov.u32 	%r5, %tid.x;
-	shl.b32 	%r6, %r5, 2;
-	cvt.s64.s32 	%rd5, %r6;
-	add.s64 	%rd6, %rd4, %rd5;
-	ld.global.u8 	%rs1, [%rd6];
-	mov.u32 	%r7, _ZZ6kernelPaS_PvE5src_a;
-	add.s32 	%r8, %r7, %r6;
-	st.shared.u8 	[%r8], %rs1;
-	ld.global.u8 	%rs2, [%rd6+1];
-	st.shared.u8 	[%r8+1], %rs2;
-	ld.global.u8 	%rs3, [%rd6+2];
-	st.shared.u8 	[%r8+2], %rs3;
-	ld.global.u8 	%rs4, [%rd6+3];
-	st.shared.u8 	[%r8+3], %rs4;
-	add.s64 	%rd7, %rd3, %rd5;
-	ld.global.u8 	%rs5, [%rd7];
-	mov.u32 	%r4, _ZZ6kernelPaS_PvE5src_b;
-	add.s32 	%r9, %r4, %r6;
-	st.shared.u8 	[%r9], %rs5;
-	ld.global.u8 	%rs6, [%rd7+1];
-	st.shared.u8 	[%r9+1], %rs6;
-	ld.global.u8 	%rs7, [%rd7+2];
-	st.shared.u8 	[%r9+2], %rs7;
-	ld.global.u8 	%rs8, [%rd7+3];
-	st.shared.u8 	[%r9+3], %rs8;
+	ld.param.u64 	%rd3, [_Z6kernelPaS_Pv_param_2];
+	cvta.to.global.u64 	%rd4, %rd3;
+	cvta.to.global.u64 	%rd5, %rd2;
+	cvta.to.global.u64 	%rd6, %rd1;
+	mov.u32 	%r11, %tid.x;
+	shl.b32 	%r12, %r11, 2;
+	cvt.s64.s32 	%rd7, %r12;
+	add.s64 	%rd8, %rd6, %rd7;
+	ld.global.u8 	%rs1, [%rd8];
+	mov.u32 	%r13, _ZZ6kernelPaS_PvE5src_a;
+	add.s32 	%r14, %r13, %r12;
+	mov.u32 	%r10, 0;
+	st.shared.u8 	[%r14], %rs1;
+	ld.global.u8 	%rs2, [%rd8+1];
+	st.shared.u8 	[%r14+1], %rs2;
+	ld.global.u8 	%rs3, [%rd8+2];
+	st.shared.u8 	[%r14+2], %rs3;
+	ld.global.u8 	%rs4, [%rd8+3];
+	st.shared.u8 	[%r14+3], %rs4;
+	add.s64 	%rd9, %rd5, %rd7;
+	ld.global.u8 	%rs5, [%rd9];
+	mov.u32 	%r15, _ZZ6kernelPaS_PvE5src_b;
+	add.s32 	%r16, %r15, %r12;
+	st.shared.u8 	[%r16], %rs5;
+	ld.global.u8 	%rs6, [%rd9+1];
+	st.shared.u8 	[%r16+1], %rs6;
+	ld.global.u8 	%rs7, [%rd9+2];
+	st.shared.u8 	[%r16+2], %rs7;
+	ld.global.u8 	%rs8, [%rd9+3];
+	st.shared.u8 	[%r16+3], %rs8;
 	bar.sync 	0;
-	shl.b32 	%r10, %r5, 4;
-	and.b32  	%r11, %r10, 112;
-	add.s32 	%r2, %r7, %r11;
+	shl.b32 	%r17, %r11, 4;
+	and.b32  	%r18, %r17, 112;
+	add.s32 	%r2, %r13, %r18;
+	add.s32 	%r4, %r15, %r18;
 	// begin inline asm
 	ldmatrix.sync.aligned.m8n8.x1.shared::cta.b16 {%r1}, [%r2];
 	// end inline asm
 	// begin inline asm
 	ldmatrix.sync.aligned.m8n8.x1.shared::cta.b16 {%r3}, [%r4];
 	// end inline asm
-	st.shared.u8 	[%r9], %r1;
-	shr.u32 	%r12, %r1, 8;
-	st.shared.u8 	[%r9+1], %r12;
-	shr.u32 	%r13, %r1, 16;
-	st.shared.u8 	[%r9+2], %r13;
-	shr.u32 	%r14, %r1, 24;
-	st.shared.u8 	[%r9+3], %r14;
 	bar.sync 	0;
-	ld.shared.u8 	%rs9, [%r8];
-	st.global.u8 	[%rd6], %rs9;
-	ld.shared.u8 	%rs10, [%r8+1];
-	st.global.u8 	[%rd6+1], %rs10;
-	ld.shared.u8 	%rs11, [%r8+2];
-	st.global.u8 	[%rd6+2], %rs11;
-	ld.shared.u8 	%rs12, [%r8+3];
-	st.global.u8 	[%rd6+3], %rs12;
-	ld.shared.u8 	%rs13, [%r9];
-	st.global.u8 	[%rd7], %rs13;
-	ld.shared.u8 	%rs14, [%r9+1];
-	st.global.u8 	[%rd7+1], %rs14;
-	ld.shared.u8 	%rs15, [%r9+2];
-	st.global.u8 	[%rd7+2], %rs15;
-	ld.shared.u8 	%rs16, [%r9+3];
-	st.global.u8 	[%rd7+3], %rs16;
+	// begin inline asm
+	mma.sync.aligned.m8n8k16.row.col.s32.s8.s8.s32 {%r5, %r6}, {%r1}, {%r3}, {%r10, %r10};
+	// end inline asm
+	shl.b32 	%r19, %r11, 1;
+	shl.b32 	%r20, %r11, 3;
+	mov.u32 	%r21, _ZZ6kernelPaS_PvE10dst_shared;
+	add.s32 	%r22, %r21, %r20;
+	st.shared.u32 	[%r22], %r5;
+	st.shared.u32 	[%r22+4], %r6;
+	bar.sync 	0;
+	ld.shared.u32 	%r23, [%r22];
+	mul.wide.u32 	%rd10, %r19, 4;
+	add.s64 	%rd11, %rd4, %rd10;
+	st.global.u32 	[%rd11], %r23;
+	ld.shared.u32 	%r24, [%r22+4];
+	st.global.u32 	[%rd11+4], %r24;
 	ret;
 
 }
