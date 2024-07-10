@@ -72,7 +72,7 @@
 	ldmatrix.sync.aligned.m8n8.x1.shared::cta.b16 {%r1}, [%r2];
 	// end inline asm
 	// begin inline asm
-	ldmatrix.sync.aligned.m8n8.x1.shared::cta.b16 {%r3}, [%r4];
+	ldmatrix.sync.aligned.m8n8.x1.trans.shared::cta.b16 {%r3}, [%r4];
 	// end inline asm
 	bar.sync 	0;
 	// begin inline asm
