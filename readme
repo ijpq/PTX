@@ -1,3 +1,0 @@
-`make debug`: print all information through the mma process
-
-`make`: build release, check result
